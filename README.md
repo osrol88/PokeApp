@@ -31,6 +31,8 @@ Aplicación .NET Core 9.0 que interactúa con la PokeAPI para obtener informaci�
 - SQL Server	1433	sa/StrongPass123
 - Aplicación Web	5000	http://localhost:5000
 
+![Aplicacion](./img/pokeapp.png.png)
+
   ### Estructura del Proyecto
    ```bash
   PokeApiApp/
