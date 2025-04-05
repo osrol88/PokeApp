@@ -1,0 +1,43 @@
+﻿@page
+@model IndexModel
+
+<div class="bg-light">
+
+    <div class="container min-vh-100 d-flex justify-content-center align-items-center">
+        <div class="card shadow-lg p-4 w-100" style="max-width: 500px;">
+
+            <!-- Título -->
+            <h1 class="text-primary text-center mb-4">Buscar Pokémon</h1>
+
+            <!-- Formulario de búsqueda -->
+            <form method="get">
+                <div class="input-group mb-4">
+                    <input type="text" name="name" class="form-control" placeholder="Nombre del Pokémon" />
+                    <button type="submit" class="btn btn-primary">Buscar</button>
+                </div>
+            </form>
+
+            <!-- Resultado del Pokémon -->
+            @if (Model.Pokemon != null)
+            {
+                <div class="text-center">
+                    <h2 class="h4 text-secondary mb-3">@Model.Pokemon.Nombre</h2>
+                    <img src="@Model.Pokemon.ImagenUrl" alt="@Model.Pokemon.Nombre"
+                         class="rounded-circle mb-4" style="width: 180px; height: 180px;" />
+                    <ul class="list-unstyled">
+                        <li><strong>Altura:</strong> @Model.Pokemon.Altura cm</li>
+                        <li><strong>Peso:</strong> @Model.Pokemon.Peso kg</li>
+                        <li><strong>Tipos:</strong> @string.Join(", ", Model.Pokemon.Tipos)</li>
+                    </ul>
+                </div>
+            }
+            else if (!string.IsNullOrEmpty(Request.Query["name"]))
+            {
+                <div class="alert alert-warning text-center mt-3">
+                    No se encontró el Pokémon con el nombre <strong>"@Request.Query["name"]"</strong>.
+                </div>
+            }
+        </div>
+    </div>
+
+</div>

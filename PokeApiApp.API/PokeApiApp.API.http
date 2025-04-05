@@ -1,0 +1,13 @@
+@PokeApiApp.API_HostAddress = http://localhost:44316
+
+### Obtener un Pokémon por nombre
+GET {{PokeApiApp.API_HostAddress}}/api/pokemon/pikachu
+Accept: application/json
+
+###
+
+### Obtener otro Pokémon
+GET {{PokeApiApp.API_HostAddress}}/api/pokemon/charizard
+Accept: application/json
+
+###

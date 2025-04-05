@@ -1,0 +1,58 @@
+services:
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: sqlserver
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=StrongPass123 
+      - MSSQL_PID=Express
+    ports:
+      - "1433:1433"
+    volumes:
+      - sqlserver-data:/var/opt/mssql
+      - ./PokeApiApp/docker/CreatePokemonTable.sql:/docker-entrypoint-initdb.d/CreatePokemonTable.sql
+    networks:
+      - pokenet
+    healthcheck:
+      test: ["CMD", "/opt/mssql-tools/bin/sqlcmd", "-S", "localhost", "-U", "sa", "-P", "StrongPass123", "-Q", "SELECT 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  # poke-api:
+  #   build:
+  #     context: .
+  #     dockerfile: PokeApiApp.API/Dockerfile
+  #   container_name: poke-api
+  #   environment:
+  #     - ASPNETCORE_ENVIRONMENT=Development
+  #     - ConnectionStrings__pokeConn=Server=sqlserver;Database=PokemonDb;User Id=sa;Password=StrongPass123;TrustServerCertificate=True;
+  #   ports:
+  #     - "5001:8080"
+  #   depends_on:
+  #     sqlserver:
+  #       condition: service_healthy
+  #   networks:
+  #     - pokenet
+
+  poke-web:
+    build:
+     context: .
+     dockerfile: PokeApiApp.web/Dockerfile
+    container_name: poke-web
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__pokeConn=Server=sqlserver;Database=PokemonDb;User Id=sa;Password=StrongPass123;TrustServerCertificate=True;
+    ports:
+      - "5000:8080"
+    depends_on:
+      - sqlserver
+    networks:
+      - pokenet
+
+networks:
+  pokenet:
+    driver: bridge
+
+volumes:
+  sqlserver-data:

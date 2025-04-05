@@ -1,0 +1,31 @@
+# Ignorar los archivos de compilación de .NET
+bin/
+obj/
+
+# Ignorar archivos de configuración del sistema operativo
+.DS_Store
+Thumbs.db
+
+# Ignorar el directorio de dependencias de Docker
+**/node_modules/
+
+# Ignorar archivos sensibles como configuraciones de la base de datos
+appsettings.Development.json
+appsettings.json
+secrets.json
+
+# Ignorar archivos de Docker
+*.log
+Dockerfile*
+docker-compose.override.yml
+
+# Ignorar el directorio de datos del contenedor SQL Server
+mssql_data/
+
+# Ignorar los directorios de publicación de .NET
+publish/
+
+# Ignorar las configuraciones de IDEs (Visual Studio, etc.)
+.vs/
+.vscode/
+.idea/
